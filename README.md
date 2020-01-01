@@ -42,6 +42,7 @@ or function in loop.
 - write in flight simulator advanced settings: 
 
 `--telnet=socket,in,10,10.0.2,5402,tcp `
+
 `--generic=socket,out,10,127.0.1,5400,tcp,generic_small`
 
 - compile in terminal (on linux) with command:
