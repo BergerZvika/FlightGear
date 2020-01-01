@@ -12,7 +12,7 @@ Zvi Arie Berger
 Yonatan Davidov
 
 - **I.D** : 308447234
-- **Submit name** : davodoy5
+- **Submit name** : davidoy5
 
 ## Intrudoction
 The project Written on clion in c++. We work together on the project and 
