@@ -54,6 +54,35 @@ or function in loop.
 `a.out fly.txt`
 - press fly on flght simulator.
 
+## Files
+- main.c 
+
+### command file
+- Command.h
+- ConnectClientCommand.h
+- ConnectClientCommand.cpp
+- OpenServerCommand.h
+- OpenServerCommand.cpp
+- ConditionCommand.h
+- ConditionCommand.cpp
+- Function.h
+- Function.cpp
+
+### variables files
+- EqualVar.h
+- EqualVar.cpp
+- LeftVar.h
+- LeftVar.cpp
+- RightVar.h
+- RightVar.cpp
+- Expression.h
+
+### Function class
+- Lexer.h
+- Lexer.cpp
+- Interpreter.h
+- Interpreter.cpp
+
 ## Links
 - Our GitHub project https://github.com/BergerZvika/flightgear.git
 - Download FlightGear Simulator https://www.flightgear.org/download/
