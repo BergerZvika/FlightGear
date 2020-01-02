@@ -83,6 +83,10 @@ or function in loop.
 - Interpreter.h
 - Interpreter.cpp
 
+### Txt Files
+- fly.txt
+- fly_with_func.txt
+
 ## Links
 - Our GitHub project https://github.com/BergerZvika/flightgear.git
 - Download FlightGear Simulator https://www.flightgear.org/download/
