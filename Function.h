@@ -10,8 +10,8 @@
 #include "Interpreter.h"
 
 class Function: public Command {
-    list<list<string>> commandList;
-    vector<string> vars;
+    list<list<string>> CommandList;
+    vector<string> Vars;
 public:
     Function(list<list<string>> commandList, vector<string> vars);
     int execute() override ;

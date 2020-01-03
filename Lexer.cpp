@@ -23,7 +23,7 @@ extern unordered_map<string, LeftVar*> leftMap;
 extern unordered_map<string, EqualVar*> equalMap;
 extern unordered_map<string, Function*> funcMap;
 extern vector<thread*> m_thread_vector;
-extern Interpreter i;
+extern Interpreter I;
 extern ConnectClientCommand* connectClientCommand;
 
 /// return if the string is a condition operator
@@ -43,7 +43,7 @@ string eraseWord(string line, string word){
         add++;
     }
     // copy the new erase line to temp string called newLine
-    for (int i = word.length() + add; i < line.length(); i++) {
+    for (unsigned int i = word.length() + add; i < line.length(); i++) {
         newLine += line[i];
     }
     return newLine;
@@ -52,7 +52,7 @@ string eraseWord(string line, string word){
 //erase the latest char of word;
 string eraseEnd(string word) {
     string newWord = "";
-    int i;
+    unsigned int i;
     for (i = 0; i < word.length() - 1; i++) {
         newWord += word[i];
     }
@@ -62,7 +62,7 @@ string eraseEnd(string word) {
 //erase first char of word
 string eraseFirst(string word) {
     string temp = "";
-    for (int i = 1; i < word.length(); i++) {
+    for (unsigned int i = 1; i < word.length(); i++) {
         temp += word[i];
     }
     return  temp;
@@ -72,7 +72,7 @@ string eraseFirst(string word) {
 string addSpace(string line) {
     int comma = 0;
     string spaceLine = "";
-    for (int i = 0; i < line.length(); i++) {
+    for (unsigned int i = 0; i < line.length(); i++) {
         //check if comma is open. if open close = 0, else open = 1.
         if(line[i] == '"') {
             if (comma) {
@@ -92,7 +92,7 @@ string addSpace(string line) {
         spaceLine += line[i];
         //condition for space after char
         if ((line[i] == '=' && line[i+1] != '>' && line[i+1] != '=') || (line[i] == '<' && (line[i+1] != '-'&&
-        line[i+1] != '=')) || (line[i] == '>' && line[i+1] != '=' && line[i-1] != '=') && line[i + 1] != ' ') {
+        line[i+1] != '=')) || (line[i] == '>' && line[i+1] != '=' && line[i-1] != '=') && (line[i + 1] != ' ')) {
             spaceLine += ' ';
         }
     }
@@ -102,7 +102,7 @@ string addSpace(string line) {
 //remove space in expression
 string removeSpace(string word) {
     string temp = "";
-    for (int i = 0; i < word.length(); i++) {
+    for (unsigned int i = 0; i < word.length(); i++) {
         if (word[i] != ' ') {
             temp += word[i];
         }
@@ -189,8 +189,8 @@ list<list<string>> Lexer :: read(string file_name) {
                 word = removeSpace(word);
             }
             //condition if there is expression
-            if (command.size() > 0 && (*(command.begin()) == "connectControlClient" || *(command.begin()) == "Sleep")
-                || word == "Sleep" || word == "connectControlClient") {
+            if (((command.size() > 0) && (*(command.begin()) == "connectControlClient" || *(command.begin()) == "Sleep")
+                || (word == "Sleep") || (word == "connectControlClient"))) {
                 line = removeSpace(line);
             }
             if (word.length() != 0) {
@@ -213,7 +213,7 @@ void Lexer :: parser(list<list<string>> commandList) {
         auto it2 = it->begin();
         it2++;
         if(r.compare("openDataServer") == 0){
-            double port = i.interpret(*it2);
+            double port = I.interpret(*it2);
             //open server
             this->openServerCommand = new OpenServerCommand(port);
             openServerCommand->execute();
@@ -224,7 +224,7 @@ void Lexer :: parser(list<list<string>> commandList) {
         } else if(r.compare("connectControlClient")==0) {
             string ip = *it2;
             it2++;
-            double portOfClient = i.interpret(*it2);
+            double portOfClient = I.interpret(*it2);
             // connected to sim server
             connectClientCommand = new ConnectClientCommand(ip, portOfClient);
             connectClientCommand->execute();
@@ -250,7 +250,7 @@ void Lexer :: parser(list<list<string>> commandList) {
                 leftMap[name] = leftVar;
             }
             if(sign.compare("=") ==0) {
-                double val = i.interpret(numOfEqual);
+                double val = I.interpret(numOfEqual);
                 cout <<val<<endl;
                 // create variable that get value
                 EqualVar* equalVar = new EqualVar(name, val);
@@ -266,14 +266,14 @@ void Lexer :: parser(list<list<string>> commandList) {
             else if(equalMap.find(*it2)!= equalMap.end()) {
                 cout <<equalMap[*it2]->getVal()<< endl;
             }
-            else if (i.getMap().find(*it2) != i.getMap().end()) {
-                cout <<i.getMap()[*it2]<< endl;
+            else if (I.getMap().find(*it2) != I.getMap().end()) {
+                cout <<I.getMap()[*it2]<< endl;
             } else {
                 string print = *it2;
                 cout<<(print)<< endl;
             }
         } else if(r.compare("Sleep") == 0) {
-            double d = i.interpret(*it2);
+            double d = I.interpret(*it2);
             int x = (int)d;
             //sleep that tread
             this_thread::sleep_for(std::chrono::milliseconds(x));
@@ -301,12 +301,12 @@ void Lexer :: parser(list<list<string>> commandList) {
             condition->execute();
         } else if(rightMap.find(r)!= rightMap.end()) {
             it2++;
-            double d = i.interpret(*it2);
+            double d = I.interpret(*it2);
             //update value and update the sim
             rightMap[r]->setVal(d);
         } else if(equalMap.find(r)!= equalMap.end()) {
             it2++;
-            double d = i.interpret(*it2);
+            double d = I.interpret(*it2);
             //update val
             equalMap[r]->setVal(d);
         } else if (funcMap.find(r)!= funcMap.end()) {
@@ -315,12 +315,12 @@ void Lexer :: parser(list<list<string>> commandList) {
                 num.push_back(*it2);
                 it2++;
             }
-            Function f = *funcMap[r];
-            f.setVariables(num);
-            f.execute();
-        } else if ((i.getMap().find(r) != i.getMap().end())) {
+            Function *f = funcMap[r];
+            f->setVariables(num);
+            f->execute();
+        } else if ((I.getMap().find(r) != I.getMap().end())) {
             it2++;
-            i.setMapValue(r, i.interpret(*it2));
+            I.setMapValue(r, I.interpret(*it2));
         } else {
             // create function
             list<list<string>> conditionList;

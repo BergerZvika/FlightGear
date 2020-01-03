@@ -10,12 +10,11 @@
 #include "Interpreter.h"
 
 class ConditionCommand: public Command {
-    string command;
-    string left;
-    string sign;
-    string right;
-    list<list<string>> commandList;
-    Interpreter i;
+    string Command;
+    string Left;
+    string Sign;
+    string Right;
+    list<list<string>> CommandList;
 public:
     ConditionCommand(list<list<string>> commandList, string command,  string left, string sign, string right);
     int execute() override ;

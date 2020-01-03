@@ -20,6 +20,7 @@ using namespace std;
 #include <chrono>
 //interface
 class Command {
+protected:
     virtual int execute() = 0;
 };
 

@@ -5,18 +5,18 @@
 #include "Function.h"
 #include "Lexer.h"
 
-extern Interpreter i;
+extern Interpreter I;
 
 Function :: Function(list<list<string>> commandList, vector<string> vars) {
-    this->vars = vars;
-    this->commandList = commandList;
+    this->Vars = vars;
+    this->CommandList = commandList;
 }
 
 void Function :: setVariables(list<string> num) {
-    i.setVariables(this->vars, num);
+    I.setVariables(this->Vars, num);
 }
 
 int Function :: execute() {
     Lexer l;
-    l.parser(this->commandList);
+    l.parser(this->CommandList);
 }

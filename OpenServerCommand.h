@@ -17,7 +17,6 @@ private:
 
 public:
     explicit OpenServerCommand(double port);
-
     int execute() override ;
     void getInfoAboutSim();
     int readFromSim();

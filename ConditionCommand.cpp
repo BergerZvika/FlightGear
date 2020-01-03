@@ -5,30 +5,32 @@
 #include "ConditionCommand.h"
 #include "Lexer.h"
 
+extern Interpreter I;
+
 //constractor
 ConditionCommand :: ConditionCommand(list<list<string>> commandList, string command,  string left, string sign, string right){
-    this->commandList = commandList;
-    this->command = command;
-    this->left = left;
-    this->sign = sign;
-    this->right = right;
+    this->CommandList = commandList;
+    this->Command = command;
+    this->Left = left;
+    this->Sign = sign;
+    this->Right = right;
 }
 
 //this function check if condition is true or false.
 bool ConditionCommand ::condition() {
-    if (sign == "=" && i.interpret(left) == i.interpret(right)) {
+    if (Sign == "=" && I.interpret(Left) == I.interpret(Right)) {
         return true;
-    } else if (sign == "==" && i.interpret(left) == i.interpret(right)) {
+    } else if (Sign == "==" && I.interpret(Left) == I.interpret(Right)) {
         return true;
-    } else if (sign == ">" && i.interpret(left) > i.interpret(right)) {
+    } else if (Sign == ">" && I.interpret(Left) > I.interpret(Right)) {
         return true;
-    } else if(sign == "<" && i.interpret(left) < i.interpret(right)) {
+    } else if(Sign == "<" && I.interpret(Left) < I.interpret(Right)) {
         return true;
-    } else if(sign == ">=" && i.interpret(left) >= i.interpret(right)) {
+    } else if(Sign == ">=" && I.interpret(Left) >= I.interpret(Right)) {
         return true;
-    } else if(sign == "<=" && i.interpret(left) <= i.interpret(right)) {
+    } else if(Sign == "<=" && I.interpret(Left) <= I.interpret(Right)) {
         return true;
-    } else if(sign == "!=" && i.interpret(left) != i.interpret(right)) {
+    } else if(Sign == "!=" && I.interpret(Left) != I.interpret(Right)) {
         return true;
     }
     //the condition is false.
@@ -38,11 +40,11 @@ bool ConditionCommand ::condition() {
 //this function execute if or while command
 int ConditionCommand :: execute() {
     Lexer l = Lexer();
-    if (this->command == "if" && this->condition()) {
-        l.parser(this->commandList);
-    } else if (this->command == "while") {
+    if (this->Command == "if" && this->condition()) {
+        l.parser(this->CommandList);
+    } else if (this->Command == "while") {
         while (this->condition()) {
-            l.parser(this->commandList);
+            l.parser(this->CommandList);
         }
     }
     return  0;

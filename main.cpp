@@ -15,7 +15,7 @@ unordered_map<string, LeftVar*> leftMap;
 unordered_map<string, EqualVar*> equalMap;
 unordered_map<string, Function*> funcMap;
 vector<thread*> m_thread_vector;
-Interpreter i;
+Interpreter I;
 bool connected = false;
 ConnectClientCommand* connectClientCommand;
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
     for(unordered_map<string, Function*>::iterator it = funcMap.begin(); it != funcMap.end(); it++) {
         free(it->second);
     }
-    for (int i = 0; i < m_thread_vector.size(); i++) {
+    for (unsigned int i = 0; i < m_thread_vector.size(); i++) {
         free(m_thread_vector[i]);
     }
     return 0;
